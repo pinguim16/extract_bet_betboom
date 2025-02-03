@@ -1,0 +1,84 @@
+/* Reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Corpo da página com fonte personalizada e gradiente de fundo */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container centralizado com fundo semi-transparente e efeitos de sombra */
+.container {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 320px;
+    backdrop-filter: blur(5px);
+}
+
+/* Título com ícone e espaçamento */
+h1 {
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 i {
+    margin-right: 10px;
+    color: #ff7e5f;
+}
+
+/* Botão estilizado com ícone, cores e efeitos de transição */
+.btn {
+    background-color: #ff7e5f;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Efeito de hover no botão */
+.btn:hover {
+    background-color: #feb47b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Efeito de active no botão */
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Área de status com espaçamento e cor */
+#status {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #555;
+    min-height: 20px;
+}

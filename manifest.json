@@ -1,0 +1,44 @@
+{
+    "manifest_version": 3,
+    "name": "Betting Data Extractor Betboom",
+    "description": "Uma extensão Chrome para extrair dados de apostas do site Betboom e exportá-los para arquivo CSV.",
+    "version": "1.0",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "downloads"
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icon.png",
+            "48": "icon.png",
+            "128": "icon.png"
+        }
+    },
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://betboom.bet.br/*"],
+            "js": ["content.js"]
+        }
+    ],
+    "host_permissions": [
+        "https://betboom.bet.br/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["icons/*"],
+            "matches": ["https://betboom.bet.br/*"]
+        }
+    ]
+  }
+  

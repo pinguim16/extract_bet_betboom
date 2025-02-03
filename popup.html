@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extrator de Apostas - Betboom</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- CSS Personalizado para o Popup -->
+  <link rel="stylesheet" href="popup.css">
+  <!-- Estilos adicionais para o layout em preto e amarelo -->
+  <style>
+    /* Define o fundo preto e o texto amarelo */
+    body {
+      background-color: #000;
+      color: #FFD700;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    /* Container centralizado com fundo semi-transparente, borda e cantos arredondados */
+    .container {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #FFD700;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 400px;
+      margin: 100px auto;
+      text-align: center;
+    }
+    /* Estilo para o título */
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    /* Botão estilizado com fundo amarelo, texto preto e efeitos de hover */
+    .btn {
+      background-color: #FFD700;
+      color: #000;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      width: 100%;
+    }
+    .btn:hover {
+      background-color: #e6c200;
+      transform: translateY(-2px);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    /* Área de status */
+    #status {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-bolt"></i> Extrator de Apostas</h1>
+    <button id="start-extraction" class="btn"><i class="fas fa-download"></i> Iniciar Extração</button>
+    <div id="status"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
