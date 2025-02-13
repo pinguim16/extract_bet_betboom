@@ -394,7 +394,7 @@
    *   sejam capturadas.
    * - 20 colunas CSV, com stake->tipster e label <= 100 chars.
    ********************************************************/
- /********************************************************
+   /********************************************************
    * 2) Variáveis e Funções Auxiliares
    ********************************************************/
 
@@ -407,14 +407,13 @@
   }
 
   // 2.2) parseDateTimeBB(dateStr)
-  // Esta função converte a data exibida pelo site no formato:
+  // Converte a data exibida pelo site no formato:
   // "Hoje em HH:MM", "Ontem em HH:MM" ou "D de Mês em HH:MM [de AAAA]"
   // para o formato "dd/mm/AAAA HH:MM:00".
   function parseDateTimeBB(dateStr) {
     dateStr = dateStr.trim();
     const now = new Date();
     let day, month, year, timePart;
-    // Caso "Hoje" ou "Ontem"
     if (/hoje/i.test(dateStr)) {
       day = now.getDate();
       month = now.getMonth() + 1;
@@ -429,7 +428,6 @@
       const match = dateStr.match(/ontem\s+em\s+(\d{1,2}:\d{2})/i);
       timePart = match ? match[1] : "00:00";
     } else {
-      // Espera formato: "1 de fevereiro em 15:14 de 2025" ou sem o ano
       const regex = /(\d{1,2})\s+de\s+([a-zç]+)(?:\s+de\s+(\d{4}))?\s+em\s+(\d{1,2}:\d{2})/i;
       const match = dateStr.match(regex);
       if (match) {
@@ -444,21 +442,18 @@
         };
         month = monthsPT[monthStr] || 1;
       } else {
-        // Se não casar, retorne a string original
         return dateStr;
       }
     }
-    // Formata os valores com dois dígitos
     const dd = String(day).padStart(2, '0');
     const mm = String(month).padStart(2, '0');
     const yyyy = year;
-    // Acrescenta segundos ":00"
     return `${dd}/${mm}/${yyyy} ${timePart}:00`;
   }
 
   // 2.3) isBetResolved(betEl)
   function isBetResolved(betEl) {
-    const stateEl = betEl.querySelector('.YxE_E-44489450');
+    const stateEl = betEl.querySelector('.YxE_E-d219b20c');
     if (!stateEl) return false;
     const stateText = stateEl.textContent.trim().toLowerCase();
     return stateText === 'win' || stateText === 'loss';
@@ -478,24 +473,24 @@
    ********************************************************/
   async function getBetIdFromPopup(betEl) {
     console.log("Extraindo ID para aposta simples.");
-    const clickable = betEl.querySelector('.m7FPn-44489450') || betEl;
+    const clickable = betEl.querySelector('.m7FPn-d219b20c') || betEl;
     clickable.click();
     let popup;
     const maxAttempts = 10;
     let attempts = 0;
     while (!popup && attempts < maxAttempts) {
       await new Promise(res => setTimeout(res, 500));
-      popup = document.querySelector('div[role="dialog"].ftqRp-44489450');
+      popup = document.querySelector('div[role="dialog"].ftqRp-d219b20c');
       attempts++;
     }
     if (!popup) {
       console.error("Popup não apareceu para aposta simples; usando ID do elemento.");
       return betEl.getAttribute('id') || 'N/A';
     }
-    const idEl = popup.querySelector('.x_Cef-44489450');
+    const idEl = popup.querySelector('.x_Cef-d219b20c');
     const betId = idEl ? idEl.textContent.trim() : (betEl.getAttribute('id') || 'N/A');
     console.log("ID extraído para aposta simples:", betId);
-    const closeBtn = popup.querySelector('button.zO_gN-44489450');
+    const closeBtn = popup.querySelector('button.zO_gN-d219b20c');
     if (closeBtn) {
       closeBtn.click();
     } else {
@@ -508,7 +503,7 @@
   /********************************************************
    * 4) getMultiBetId(betEl)
    *    Para apostas múltiplas:
-   *    1. Clica no botão "Assistir X eventos" (classe "wobei-44489450").
+   *    1. Clica no botão "Assistir X eventos" (classe "wobei-d219b20c").
    *    2. Aguarda 1,5 segundos para que a área expandida seja carregada.
    *    3. Posiciona a rolagem na área expandida.
    *    4. Percorre vários elementos dentro da área expandida para simular cliques,
@@ -532,7 +527,7 @@
       console.log("Tentando candidato:", candidate.tagName, candidate.className);
       simulateClick(candidate);
       await new Promise(res => setTimeout(res, 700));
-      let popup = document.querySelector('div[role="dialog"].ftqRp-44489450');
+      let popup = document.querySelector('div[role="dialog"].ftqRp-d219b20c');
       if (popup) {
         console.log("Popup aberto com candidato:", candidate.tagName, candidate.className);
         return candidate;
@@ -543,13 +538,13 @@
   
   async function getMultiBetId(betEl) {
     console.log("Extraindo ID para aposta múltipla.");
-    const assistBtn = betEl.querySelector('.wobei-44489450');
+    const assistBtn = betEl.querySelector('.wobei-d219b20c');
     if (assistBtn) {
       console.log("Clicando no botão 'Assistir X eventos'.");
       simulateClick(assistBtn);
       await new Promise(res => setTimeout(res, 1500));
       
-      const containers = document.querySelectorAll('.vYgyh-44489450');
+      const containers = document.querySelectorAll('.vYgyh-d219b20c');
       if (!containers || containers.length === 0) {
         console.error("Nenhum container de eventos encontrado.");
         return betEl.getAttribute('id') || 'N/A';
@@ -571,7 +566,7 @@
       while (!popup && attempts2 < maxAttempts2) {
         console.log("Aguardando popup aparecer... tentativa:", attempts2 + 1);
         await new Promise(res => setTimeout(res, 500));
-        popup = document.querySelector('div[role="dialog"].ftqRp-44489450');
+        popup = document.querySelector('div[role="dialog"].ftqRp-d219b20c');
         attempts2++;
       }
       if (!popup) {
@@ -579,10 +574,10 @@
         return betEl.getAttribute('id') || 'N/A';
       }
       console.log("Popup encontrado.");
-      const idEl = popup.querySelector('.x_Cef-44489450');
+      const idEl = popup.querySelector('.x_Cef-d219b20c');
       const betId = idEl ? idEl.textContent.trim() : (betEl.getAttribute('id') || 'N/A');
       console.log("ID extraído para aposta múltipla:", betId);
-      const closeBtn = popup.querySelector('button.zO_gN-44489450');
+      const closeBtn = popup.querySelector('button.zO_gN-d219b20c');
       if (closeBtn) {
         console.log("Fechando popup.");
         simulateClick(closeBtn);
@@ -635,12 +630,12 @@
    *    Seleciona todos os elementos de aposta do Betboom e extrai os dados.
    ********************************************************/
   async function extractBets() {
-    const betElements = document.querySelectorAll('.LJbWp-44489450');
+    const betElements = document.querySelectorAll('.LJbWp-d219b20c');
     const allCsvLines = [];
     for (const betEl of betElements) {
       if (!isBetResolved(betEl)) continue;
       let betId;
-      const typeEl = betEl.querySelector('.rZ2TS-44489450');
+      const typeEl = betEl.querySelector('.rZ2TS-d219b20c');
       let betType = "S";
       if (typeEl) {
         const typeText = typeEl.textContent.trim().toLowerCase();
@@ -652,14 +647,14 @@
         betId = await getBetIdFromPopup(betEl);
       }
       let dateTime = "";
-      const dateContainer = betEl.querySelector('.yiE_j-44489450');
+      const dateContainer = betEl.querySelector('.yiE_j-d219b20c');
       if (dateContainer) {
         const spans = dateContainer.querySelectorAll('span');
         dateTime = Array.from(spans).map(span => span.textContent.trim()).join(" ");
         dateTime = parseDateTimeBB(dateTime);
       }
       let betState = "W";
-      const stateEl = betEl.querySelector('.YxE_E-44489450');
+      const stateEl = betEl.querySelector('.YxE_E-d219b20c');
       if (stateEl) {
         const stateText = stateEl.textContent.trim().toLowerCase();
         betState = (stateText === "win") ? "W" : "L";
@@ -680,14 +675,13 @@
    *    Extrai os dados de uma aposta simples do Betboom.
    ********************************************************/
   function extractSingleBet(betEl, betId, dateTime, betState) {
-    const eventNameEl = betEl.querySelector('.m7FPn-44489450');
+    const eventNameEl = betEl.querySelector('.m7FPn-d219b20c');
     const eventName = eventNameEl ? eventNameEl.textContent.trim() : "";
     const fullDescription = removeQuebras(eventName);
     let stake = "0.00", totalValue = "0.00", odds = "0.00";
-    // Utiliza o seletor no elemento atual (betEl) para extrair os valores.
-    const summaryEl = betEl.querySelector('.ILbNS-44489450');
+    const summaryEl = betEl.querySelector('.ILbNS-d219b20c');
     if (summaryEl) {
-      const cp4jEls = summaryEl.querySelectorAll('._CP4J-44489450');
+      const cp4jEls = summaryEl.querySelectorAll('._CP4J-d219b20c');
       if (cp4jEls.length >= 2) {
         stake = cp4jEls[0].textContent.replace('R$', '').trim();
         totalValue = cp4jEls[1].textContent.replace('R$', '').trim();
@@ -695,7 +689,7 @@
         stake = cp4jEls[0].textContent.replace('R$', '').trim();
         totalValue = "0.00";
       }
-      const oddsEl = summaryEl.querySelector('.Go8Sz-44489450 span');
+      const oddsEl = summaryEl.querySelector('.Go8Sz-d219b20c span');
       if (oddsEl) {
         odds = oddsEl.textContent.trim();
       }
@@ -733,12 +727,12 @@
   /********************************************************
    * 8) extractMultiBet(betEl, betId, dateTime, betState)
    *    Extrai os dados de uma aposta múltipla do Betboom.
-   *    Após a expansão, utiliza a última div expandida ("vYgyh-44489450")
+   *    Após a expansão, utiliza a última div expandida ("vYgyh-d219b20c")
    *    para extrair os detalhes dos eventos.
    ********************************************************/
   function extractMultiBet(betEl, betId, dateTime, betState) {
     let sport = "Outro esporte";
-    const sportEl = betEl.querySelector('.bet-event__name span');
+    const sportEl = betEl.querySelector('.bet-event__name-d219b20c span');
     if (sportEl) {
       const txt = sportEl.textContent.trim();
       if (txt.toLowerCase().indexOf("futebol") > -1) {
@@ -746,10 +740,9 @@
       }
     }
     let stake = "0.00", totalValue = "0.00", odds = "0.00";
-    // Utiliza o seletor no elemento atual (betEl) para extrair os valores.
-    const summaryEl = betEl.querySelector('.ILbNS-44489450');
+    const summaryEl = betEl.querySelector('.ILbNS-d219b20c');
     if (summaryEl) {
-      const cp4jEls = summaryEl.querySelectorAll('._CP4J-44489450');
+      const cp4jEls = summaryEl.querySelectorAll('._CP4J-d219b20c');
       if (cp4jEls.length >= 2) {
         stake = cp4jEls[0].textContent.replace('R$', '').trim();
         totalValue = cp4jEls[1].textContent.replace('R$', '').trim();
@@ -757,12 +750,12 @@
         stake = cp4jEls[0].textContent.replace('R$', '').trim();
         totalValue = stake;
       }
-      const oddsEl = summaryEl.querySelector('.Go8Sz-44489450 span');
+      const oddsEl = summaryEl.querySelector('.Go8Sz-d219b20c span');
       if (oddsEl) {
         odds = oddsEl.textContent.trim();
       }
     }
-    const containers = document.querySelectorAll('.vYgyh-44489450');
+    const containers = document.querySelectorAll('.vYgyh-d219b20c');
     const container = containers[containers.length - 1];
     if (!container) {
       console.error("Container de eventos não encontrado para a aposta múltipla.");
